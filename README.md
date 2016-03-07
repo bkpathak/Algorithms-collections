@@ -17,7 +17,7 @@ Each of the DP problems are implemented using
 
 List of DP problems:
 
-1. Array Partition
+1. [Array Partition](array_partition.py)
 2. Catalan Number
 3. Coin Change
 4. Coin Play
