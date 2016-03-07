@@ -18,18 +18,18 @@ Each of the DP problems are implemented using
 List of DP problems:
 
 1. [Array Partition](DP/array_partition.py)
-2. Catalan Number
-3. Coin Change
-4. Coin Play
-5. Edit Distance
-6. Knights Tour
-7. Longest Common Subsequence
-8. Longest Palindromic Subsequence
-9. Matrix Chain Multiply
-10. Maximum Size Square Sub-matrix
-11. Nth Stair
-12. Robbery
-13. String Interleaving
-14. Total Points
-15. Word Break
-16. Word Wrap
+2. [Catalan Number](DP/catalan.py)
+3. [Coin Change](DP/coin_change.py)
+4. [Coin Play](DP/coin_play.py)
+5. [Edit Distance](DP/edit_distance.py)
+6. [Knights Tour](DP/knights_tour.py)
+7. [Longest Common Subsequence](DP/longest_common_sub_seq.py)
+8. [Longest Palindromic Subsequence](DP/longest_palindrome_sequence.py)
+9. [Matrix Chain Multiply](DP/matrix_chain_mul.py)
+10. [Maximum Size Square Sub-matrix](DP/maximum_sub_arry_square_matrix.py)
+11. [Nth Stair](DP/nth_stair.py)
+12. [Robbery](DP/robbery.py)
+13. [String Interleaving](DP/string_interleave.py)
+14. [Total Points](DP/total_points.py)
+15. [Word Break](DP/word_break.py)
+16. [Word Wrap](DP/word_wrap.py)
