@@ -14,3 +14,22 @@ Each of the DP problems are implemented using
 
 3. Bottom-Up
 >  The bottom-up approach builds the solution in a incremental way solving the sub-problems.
+
+List of DP problems:
+
+1. Array Partition
+2. Catalan Number
+3. Coin Change
+4. Coin Play
+5. Edit Distance
+6. Knights Tour
+7. Longest Common Subsequence
+8. Longest Palindromic Subsequence
+9. Matrix Chain Multiply
+10. Maximum Size Square Sub-matrix
+11. Nth Stair
+12. Robbery
+13. String Interleaving
+14. Total Points
+15. Word Break
+16. Word Wrap
