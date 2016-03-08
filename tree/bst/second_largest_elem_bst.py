@@ -20,13 +20,13 @@ def second_largest_elem_bst(root):
     """Returns the second largest element."""
     if root is None:
         return
-    # Case 1
-    if root.right.right is None and root.right.left is None:
-        return root.val
+    # Case 2
+    if root.left and root.right is None:
+        return second_largest_elem_bst(root.left)
 
     # Case 2
-    if root.right.right is None and root.right.left:
-        return second_largest_elem_bst(root.right.left)
+    if root.right and not root.right.left and not root.right.right:
+        return root.val
 
     # Repeat for the right node of the tree
     return second_largest_elem_bst(root.right)
@@ -51,10 +51,12 @@ if __name__ == "__main__":
                /  \
              (9)  (11)
    """
-    tree1 = Node(20, Node(6, Node(6, Node(1), Node(8))), Node(30, Node(),
+    tree1 = Node(20, Node(6, Node(6, Node(1), Node(8))), Node(30, Node(25),
                  Node(35)))
 
     tree2 = Node(5, Node(3, Node(1), Node(4)), Node(8, Node(7), Node(12,
                  Node(10, Node(9), Node(11)))))
 
-    
+    assert(second_largest_elem_bst(tree1) == 30), "Not correct output"
+    print(second_largest_elem_bst(tree2))
+    #assert(second_largest_elem_bst(tree2) == 11), "Not  correct output"
