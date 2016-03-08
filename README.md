@@ -33,3 +33,9 @@ List of DP problems:
 14. [Total Points](DP/total_points.py)
 15. [Word Break](DP/word_break.py)
 16. [Word Wrap](DP/word_wrap.py)
+
+List of Trees problems:
+
+BSTs
+
+1. [Second Largest Element](tree/bst/second_largest_elem_bst.py)
