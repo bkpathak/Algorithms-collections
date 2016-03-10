@@ -15,14 +15,19 @@ class Node(object):
         self.left = left
         self.right = right
 
+def largest(root):
+    if root.right is not None:
+        return largest(root.right)
+    return root.val
+
 
 def second_largest_elem_bst(root):
     """Returns the second largest element."""
     if root is None:
         return
-    # Case 2
+    # Case 1
     if root.left and root.right is None:
-        return second_largest_elem_bst(root.left)
+        return largest(root.left)
 
     # Case 2
     if root.right and not root.right.left and not root.right.right:
@@ -58,5 +63,4 @@ if __name__ == "__main__":
                  Node(10, Node(9), Node(11)))))
 
     assert(second_largest_elem_bst(tree1) == 30), "Not correct output"
-    print(second_largest_elem_bst(tree2))
-    #assert(second_largest_elem_bst(tree2) == 11), "Not  correct output"
+    assert(second_largest_elem_bst(tree2) == 11), "Not  correct output"
