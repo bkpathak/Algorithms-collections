@@ -24,7 +24,7 @@ def permutation(in_string):
         string.append(ch)
         # Store the corresponding count
         count.append(char_count[ch])
-    output_string = []
+    output_string = ['' for c in in_string]
     result = []
     permutation_util(string, len(in_string), count, output_string, 0, result)
     return result
@@ -33,7 +33,7 @@ def permutation(in_string):
 def permutation_util(string, str_len, count, output_string, left, result):
     """Utility funtion to find permuataion."""
     if left == str_len:
-        result.append(output_string)
+        result.append("".join(output_string))
         return
 
     # Iterate through string and print all the possible permuation till
@@ -45,16 +45,23 @@ def permutation_util(string, str_len, count, output_string, left, result):
         output_string[left] = string[i]
         # Decrease the character count
         count[i] -= 1
-        permutation_util(string, count, output_string, left + 1)
+        permutation_util(string, str_len, count, output_string, left + 1,
+                         result)
         # Similar to back tracking in normal permuation where we swap again for
         # the above level
         count[i] += 1
 
 if __name__ == "__main__":
     # Input 'AA'
+    test = 2
+    failed = 0
     if not ["AA"] == permutation("AA"):
         print("Test Failed")
+        failed += 1
 
     # Input 'AAB'
     if not ["AAB", "ABA", "BAA"] == permutation("AAB"):
         print("Test Failed")
+        failed += 1
+
+    print("{0} out of {1} test passed.".format(test-failed, test))
