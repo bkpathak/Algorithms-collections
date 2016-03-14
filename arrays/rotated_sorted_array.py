@@ -43,8 +43,8 @@ def find_min_iterative(array, left, right):
     >>> find_min_iterative([6, 5, 1, 4, 3, 2], 0, 5)
     1
     """
-    mid = left + (right - left) // 2
     while array[left] > array[right]:
+        mid = left + (right - left) // 2
         if array[mid] < array[right]:
             right = mid
         else:
