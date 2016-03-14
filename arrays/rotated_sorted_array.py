@@ -25,7 +25,7 @@ def find_min_recursive(array, left, right):
     >>> find_min_recursive([6, 5, 1, 4, 3, 2], 0, 5)
     1
     """
-    if array[left] < array[right]:
+    if array[left] <= array[right]:
         return array[left]
     mid = left + (right - left) // 2
     if array[mid] < array[right]:
