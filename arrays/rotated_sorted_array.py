@@ -33,6 +33,25 @@ def find_min_recursive(array, left, right):
     else:
         return find_min_recursive(array, mid + 1, right)
 
+
+def find_min_iterative(array, left, right):
+    """ Find the minimum in rotated array in O(log n) time.
+    >>> find_min_iterative([1,2,3,4,5,6], 0, 5)
+    1
+    >>> find_min_iterative([6, 5, 4, 3, 2, 1], 0, 5)
+    1
+    >>> find_min_iterative([6, 5, 1, 4, 3, 2], 0, 5)
+    1
+    """
+    mid = left + (right - left) // 2
+    while array[left] > array[right]:
+        if array[mid] < array[right]:
+            right = mid
+        else:
+            left = mid + 1
+    return array[left]
+
+
 if __name__ == "__main__":
     import doctest
     doctest.testmod(verbose=True)
