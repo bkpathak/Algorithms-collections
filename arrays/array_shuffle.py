@@ -1,4 +1,4 @@
-# Shuffle-Yates-Knuth Implementation
+# Fisher-Yates-Knuth Implementation
 # This is the simple problem but is prone to incorrect implementation and bias result instead of uniform distribution.
 
 # Simple implementation with bias result
@@ -6,6 +6,7 @@
 import random
 import unittest
 from collections import defaultdict
+
 
 def bias_shuffle(in_list):
     for i in range(len(in_list)):
@@ -34,9 +35,30 @@ def uniform_shuffle(in_list):
 # 0 - N - 1 , and 0 - N-2, 0 - N-3 ... . So from theory we know we have N items has N! possible outcomes, N * N - 1 *
 # N-2 * ... N-N.
 
+
 class ShuffleTest(unittest.TestCase):
     def test_bias_shuffle(self):
-        shuffle_count = {}
-        for i in range(6000):
+        shuffle_count = defaultdict(int)
+        in_list = ['A', 'B', 'C']
+        for i in range(60000):
+            shuffle_list = bias_shuffle(in_list[:])
+            shuffle_count["".join(shuffle_list)] += 1
+
+        print(shuffle_count.values())
+        self.assertGreaterEqual(max(shuffle_count.values()) - min(shuffle_count.values()), 500,
+                                "Uniformly distributed.")
+
+    def test_uniform_shuffle(self):
+        shuffle_count = defaultdict(int)
+        in_list = ['A', 'B', 'C']
+        for i in range(60000):
+            shuffle_list = uniform_shuffle(in_list[:])
+            shuffle_count["".join(shuffle_list)] += 1
+
+        print(shuffle_count.values())
+        self.assertLessEqual(max(shuffle_count.values()) - min(shuffle_count.values()), 500,
+                             "Not uniformly distributed")
+
 
 if __name__ == "__main__":
+    unittest.main()
