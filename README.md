@@ -34,8 +34,12 @@ List of DP problems:
 15. [Word Break](DP/word_break.py)
 16. [Word Wrap](DP/word_wrap.py)
 
-List of Trees problems:
+List of Trees programs:
 
 BSTs
 
 1. [Second Largest Element](tree/bst/second_largest_elem_bst.py)
+
+List of Recursion programs:
+
+1. [Permutation with Repeating Characters](recursion/permutation_with_repetition.py)

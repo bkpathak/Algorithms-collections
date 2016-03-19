@@ -51,8 +51,8 @@ def is_partitioin_memo(arr,n,part_sum):
     # 1. including the last element
     # 2. excluding the last element
 
-    is_true = (is_partitioin_memo(arr,n-1,part_sum) or
-                is_partitioin_memo(arr,n-1,part_sum - arr[n-1]))
+    is_true = (is_partitioin_memo(arr,n-1,part_sum) or is_partitioin_memo(arr,
+            n-1, part_sum - arr[n-1]))
     memo_dict[(n,part_sum)] = is_true
     return is_true
 

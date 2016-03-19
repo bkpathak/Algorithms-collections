@@ -15,6 +15,7 @@ class Node(object):
         self.left = left
         self.right = right
 
+
 def largest(root):
     if root.right is not None:
         return largest(root.right)
