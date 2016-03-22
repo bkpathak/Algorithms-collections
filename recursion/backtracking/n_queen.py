@@ -30,7 +30,7 @@ def place_queen_util(queen_position, col):
     # If we reached the end of the column, that means we put the queen
     if col == len(queen_position):
         # The output is the row number to put the queen in each column
-        print([r + 1 for r in queen_position])
+        return True
 
     else:
         # Try placing the queen in each row of column `col` till we find valid position or we exhaust
@@ -40,17 +40,20 @@ def place_queen_util(queen_position, col):
             # Check if the position is safe or not
             if is_safe(queen_position, col):
                 # Find position in another column
-                place_queen_util(queen_position, col + 1)
+                if place_queen_util(queen_position, col + 1):
+                    return True
+        return False
 
 
 def place_queen(board_size):
+    queen_position = [0] * board_size  # List representing the position of Q
+
     if board_size < 4:
         print(" Solution doesn't exists for Board Size of less then 4.")
         return
 
-    queen_position = [None] * board_size  # List representing the position of Q
     place_queen_util(queen_position, 0)  # passed the position array and starting column
-    # return queen_position
+    return queen_position
 
 
 class TestNQueen(unittest.TestCase):
@@ -66,5 +69,4 @@ class TestNQueen(unittest.TestCase):
 
 
 if __name__ == "__main__":
-    print(place_queen(4))
-    # unittest.main()
+    unittest.main()
