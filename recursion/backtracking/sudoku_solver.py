@@ -12,6 +12,7 @@
 #           if !successful, remove digit and try another
 # if all digits have been tried and nothing worked, return false to trigger backtracking
 import unittest
+import random
 
 UNASSIGNED = False
 
@@ -88,6 +89,8 @@ def display_grid(grid):
 class SudokuSolverTest(unittest.TestCase):
 
     def test_sudoku_solver(self):
+        """Test the output from the Sudoku solver"""
+        print("Sudoku Solver Output")
         grid = Grid()
         solve_sudoku(grid)
         display_grid(grid)
@@ -97,7 +100,30 @@ class SudokuSolverTest(unittest.TestCase):
                 grid.cell[row][col] = UNASSIGNED    # For the purpose of testing set the current cell UNASSIGNED
                 self.assertTrue(no_conflicts(grid, [row, col], current_val),
                                 "{0} is conflict in the position ({1},{2})".format(grid.cell[row][col], row, col))
-                grid.cell[row][col] = current_val # Assigned the current cell
+                grid.cell[row][col] = current_val  # Assigned the current cell
+        print("Test Passed no conflicts.")
+        print()
+
+    def test_sudoku_solver_random(self):
+        """Randomly changed the value in the grid from the Sudoku solver"""
+        # print("Number Randomly changed number in Sudoku solver output.")
+        grid = Grid()
+        solve_sudoku(grid)
+        for r in range(grid.num_rows):
+            random_row = random.randint(0, grid.num_rows - 1)
+            random_col = random.randint(0, grid.num_cols - 1)
+            random_number = random.randint(1, 9)
+            grid.cell[random_row][random_col] = random_number
+
+        display_grid(grid)
+
+        for row in range(grid.num_rows):
+            for col in range(grid.num_cols):
+                current_val = grid.cell[row][col]
+                grid.cell[row][col] = UNASSIGNED    # For the purpose of testing set the current cell UNASSIGNED
+                self.assertTrue(no_conflicts(grid, [row, col], current_val),
+                                "{0} is conflict in the position ({1},{2})".format(current_val, row, col))
+                grid.cell[row][col] = current_val  # Assigned the current cell
         print("Test Passed no conflicts.")
 
 
