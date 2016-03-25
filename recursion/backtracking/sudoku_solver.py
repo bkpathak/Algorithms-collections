@@ -11,6 +11,7 @@
 #           if recursion successful, return true
 #           if !successful, remove digit and try another
 # if all digits have been tried and nothing worked, return false to trigger backtracking
+import unittest
 
 UNASSIGNED = False
 
@@ -83,9 +84,24 @@ def display_grid(grid):
         print()
     print()
 
+
+class SudokuSolverTest(unittest.TestCase):
+
+    def test_sudoku_solver(self):
+        grid = Grid()
+        solve_sudoku(grid)
+        display_grid(grid)
+        for row in range(grid.num_rows):
+            for col in range(grid.num_cols):
+                current_val = grid.cell[row][col]
+                grid.cell[row][col] = UNASSIGNED    # For the purpose of testing set the current cell UNASSIGNED
+                self.assertTrue(no_conflicts(grid, [row, col], current_val),
+                                "{0} is conflict in the position ({1},{2})".format(grid.cell[row][col], row, col))
+                grid.cell[row][col] = current_val # Assigned the current cell
+        print("Test Passed no conflicts.")
+
+
 if __name__ == "__main__":
-    grid = Grid()
-    solve_sudoku(grid)
-    display_grid(grid)
+    unittest.main()
 
 
