@@ -25,7 +25,7 @@ class Grid(object):
 def find_unassigned_location(grid, row_col):
     for row in range(grid.num_rows):
         for col in range(grid.num_cols):
-            if grid.cell[row][row] == UNASSIGNED:
+            if grid.cell[row][col] == UNASSIGNED:
                 row_col[0], row_col[1]=row, col
                 return True
     return False
