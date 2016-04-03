@@ -24,143 +24,57 @@ class Puzzle(object):
         self.addends_1 = addends_1
         self.addends_2 = addends_2
         self.sum_ = sum_
-        self.letter_dict = {}
-        self.assigned_digit = []
+        self.letter_dict={}
         self.__create_letter_dict()
-        self.carry = 0
-        self.current_row = 0
 
     def __create_letter_dict(self):
         """Assign None to all the letters"""
         for ch in self.addends_1 + self.addends_2 + self.sum_:
             self.letter_dict[ch] = None
 
-    def __is_valid_pos(self,pos):
-        if self.current_row == 0 and len(self.addends_1) - pos >= 0:
-            return True
-        if self.current_row == 1 and len(self.addends_2) - pos >= 0:
-            return True
-        if self.current_row == 3 and len(self.sum_) - pos >= 0:
-            return True
-        return False
-
     def is_puzzle_solved(self):
-        # Return True if no carry else False
-        return self.carry
+        carry = 0
+        for i in range(len(self.addends_1) - 1, -1, -1):
+            add_1_val = self.letter_dict.get(self.addends_1[i])
+            add_2_val = self.letter_dict.get(self.addends_2[i])
+            sum_val = (add_1_val + add_2_val) % 10
+            carry = (add_1_val + add_2_val) // 10
+            if self.letter_dict.get(self.sum_[i]) is not sum_val:
+                return False
+        if carry is not 0 and self.letter_dict.get(self.sum_[0]) is not carry:
+            return False
 
-    def is_assigning_digit_to_addend(self):
-        if self.current_row is not 2:
-            return True
-        else:
-            False
+        return True
 
-    def is_digit_assign(self, pos):
-        if self.current_row == 0 and self.__is_valid_pos(pos) and  self.addends_1[pos] in self.letter_dict:
-            self.current_row += 1
-            return True
-        if self.current_row == 1 and self.__is_valid_pos(pos) and  self.addends_2[pos] in self.letter_dict:
-            self.current_row += 1
-            return True
-        if self.current_row == 2 and self.__is_valid_pos(pos) and self.addends_2[pos] in self.letter_dict:
-            return True
-        return False
+    def assign_digit_to_letter(self, letter, digit):
+        self.letter_dict[letter] = digit
 
-    def  __sum_column(self, pos):
-        addend_1_val = 0
-        addend_2_val = 0
-        addend_1_val = self.letter_dict.get(self.addends_1[pos])
-        addend_2_val = self.letter_dict.get(self.addends_2[pos])
-        sum_val = (addend_1_val + addend_2_val) + self.carry
-        return sum_val
+    def unassign_digit_to_letter(self, letter):
+        self.letter_dict[letter] = None
 
-    def is_column_assignment_correct(self, pos):
-        sum_val = self.__sum_column(pos)
-        if self.letter_dict.get(self.sum_[pos]) == sum_val % 10:
-            self.carry = sum_val / 10
-            return True
-        return False
-
-    def is_correct_digit_used_by_other_letter(self, pos):
-        sum_val = self.__sum_column(pos)
-        if sum_val % 10 in self.assigned_digit:
-            return True
-        return False
-
-    def assign_digit_to_letter(self, digit, pos):
-        # Assign the digit to the addend of the column
-        if self.current_row == 0:
-            if self.letter_dict.get(self.addends_1[pos]) is None:
-                self.letter_dict[self.addends_1[pos]] = digit
-                self.current_row += 1
-                return True
-        if self.current_row == 1:
-            if self.letter_dict.get(self.addends_2[pos]) is None:
-                self.letter_dict[self.addends_2[pos]] = digit
-                self.current_row += 1
-                return True
-        return False
-
-    def assign_digit_to_sum(self, pos):
-
-
-
-    def reset_row(self):
-        self.current_row = 0
-
-    def unassign_digit_to_letter(self, pos):
-        if self.current_row == 0:
-            self.letter_dict[self.addends_1[pos]] = None
-        elif self.current_row == 1:
-            self.letter_dict[self.addends_2[pos]] = None
-        elif self.current_row == 2:
-            self.letter_dict[self.sum_[pos]] = None
-
-    def unique_letter(self):
+    def unique_letter_list(self):
         return list(self.letter_dict.keys())
 
-    def display_assigned_digit(self):
-        for key, val in self.letter_dict.items():
-            print("{0} => {1}".format(key, val))
+    def display_letter_digit_map(self):
+        for k, v in self.letter_dict.items():
+            print("{0} => {1}".format(k, v))
 
 
-def solve_puzzle(puzzle, pos):
-    # Base case if we reached beyond the left most char
-    if pos < 0:
-        return puzzle.is_puzzle_solved()
+def solve_puzzle(puzzle, letter_to_assign):
+    if len(letter_to_assign) == 0:                                       # Base case, no more choices to make
+        return puzzle.is_puzzle_solved(puzzle)                            # Check if the puzzled is solve
 
-    if puzzle.is_assigning_digit_to_addend():
-        if puzzle.is_digit_assign(pos):
-            solve_puzzle(puzzle, pos)
+    for digit in range(1, 10):                                             # Try all digits
+        if puzzle.assign_digit_to_letter(letter_to_assign[0], digit):     # Temporarily assign digit to letter
+            solve_puzzle(puzzle, letter_to_assign[1:])                    # Recurse if temporary assignment is success
         else:
-            for digit in range(0, 10):
-                if digit in puzzle.assigned_digit:
-                    continue
-                if puzzle.assign_digit_to_letter(digit, pos):
-                    if solve_puzzle(puzzle, pos):
-                        return True
-                puzzle.unassign_digit_to_letter(pos)
-            return False
-    else:
-        if puzzle.is_digit_assign(pos) and puzzle.is_column_assignment_correct(pos):
-            puzzle.reset_row()
-            if solve_puzzle(pos - 1):
-                return True
-        if puzzle.is_digit_assign(pos) and not puzzle.is_column_assignment_correct(pos):
-            return False
-        if not puzzle.is_digit_assign(pos) and puzzle.is_correct_digit_used_by_other_letter(pos):
-            return False
-        if not puzzle.is_digit_assign(pos) and not puzzle.is_correct_digit_used_by_other_letter(pos):
-            puzzle.assign_digit_to_sum(pos)
-            solve_puzzle(pos - 1)
-    return False
+            puzzle.unassign_digit_to_letter(letter_to_assign[0])          # Unassign if not
 
+    return False                                                           # Trigger back track since none of the avialbe;
+                                                                           # options worked
 
 if __name__ == "__main__":
-    puzzle = Puzzle("send", "more", "money")
-    letter_to_assign = puzzle.unique_letter()
-    if solve_puzzle(puzzle, letter_to_assign):
-        puzzle.display_assigned_digit()
-    else:
-        print("Puzzle is not solved.")
-        puzzle.display_assigned_digit()
-
+    puzzle = Puzzle("SEND", "MORE", "MONEY")
+    unique_letter = puzzle.unique_letter_list()
+    solve_puzzle(puzzle, unique_letter)
+    puzzle.display_letter_digit_map()
