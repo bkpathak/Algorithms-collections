@@ -34,12 +34,20 @@ class Puzzle(object):
 
     def is_puzzle_solved(self):
         carry = 0
-        for i in range(len(self.addends_1) - 1, -1, -1):
-            add_1_val = self.letter_dict.get(self.addends_1[i])
-            add_2_val = self.letter_dict.get(self.addends_2[i])
-            sum_val = (add_1_val + add_2_val) % 10
-            carry = (add_1_val + add_2_val) // 10
-            if self.letter_dict.get(self.sum_[i]) is not sum_val:
+        s_len = len(self.sum_) - 1
+        addend_1_len = len(self.addends_1) - 1
+        addend_2_len = len(self.addends_2) - 1
+        for i in range(s_len):
+            add_1_val = 0
+            add_2_val = 0
+            if addend_1_len - i >= 0:
+                add_1_val = self.letter_dict.get(self.addends_1[addend_1_len - i])
+            if addend_2_len - i >= 0:
+                add_2_val = self.letter_dict.get(self.addends_2[addend_2_len - i])
+
+            sum_val = (carry + add_1_val + add_2_val) % 10
+            carry = (carry + add_1_val + add_2_val) // 10
+            if self.letter_dict.get(self.sum_[s_len - i]) is not sum_val:
                 return False
         if carry is not 0 and self.letter_dict.get(self.sum_[0]) is not carry:
             return False
@@ -47,7 +55,10 @@ class Puzzle(object):
         return True
 
     def assign_digit_to_letter(self, letter, digit):
+        if digit in self.letter_dict.values():
+            return False
         self.letter_dict[letter] = digit
+        return True
 
     def unassign_digit_to_letter(self, letter):
         self.letter_dict[letter] = None
@@ -61,14 +72,15 @@ class Puzzle(object):
 
 
 def solve_puzzle(puzzle, letter_to_assign):
-    if len(letter_to_assign) == 0:                                       # Base case, no more choices to make
-        return puzzle.is_puzzle_solved(puzzle)                            # Check if the puzzled is solve
+    if len(letter_to_assign) == 0:    # Base case, no more choices to make
+        return puzzle.is_puzzle_solved()                            # Check if the puzzled is solve
 
     for digit in range(1, 10):                                             # Try all digits
         if puzzle.assign_digit_to_letter(letter_to_assign[0], digit):     # Temporarily assign digit to letter
-            solve_puzzle(puzzle, letter_to_assign[1:])                    # Recurse if temporary assignment is success
-        else:
-            puzzle.unassign_digit_to_letter(letter_to_assign[0])          # Unassign if not
+            if solve_puzzle(puzzle, letter_to_assign[1:]):                   # Recurse if temporary assignment is success
+                return True
+            else:
+                puzzle.unassign_digit_to_letter(letter_to_assign[0])          # Unassign if not
 
     return False                                                           # Trigger back track since none of the avialbe;
                                                                            # options worked
