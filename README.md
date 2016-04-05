@@ -43,3 +43,10 @@ BSTs
 List of Recursion programs:
 
 1. [Permutation with Repeating Characters](recursion/permutation_with_repetition.py)
+
+    Backtracking
+    
+    1. [Crypto Airthmetic](recursion/backtracking/crypti_airthmetic_puzzle.py)
+    2. [N Queen](recursion/backtracking/n_queen.py)
+    3. [Sudoku Solver](recursion/backtracking/sudoku_solver.py)
+   
