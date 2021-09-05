@@ -1,5 +1,5 @@
 def fib(n, memo={}):
-    print(memo)
+    # print(memo)
     if n in memo:
         return memo[n]
 
@@ -10,6 +10,16 @@ def fib(n, memo={}):
     return memo[n]
 
 
+def fib_tab(n):
+    tab = [0 for i in range(n + 1)]
+    tab[1] = 1
+
+    for i in range(2, n + 1):
+        tab[i] = tab[i - 1] + tab[i - 2]
+
+    return tab[n]
+
+
 if __name__ == "__main__":
     print("Starting")
-    print(fib(50))
+    print(fib_tab(50))

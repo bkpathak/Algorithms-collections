@@ -44,5 +44,19 @@ def can_sum_memo(nums, target, memo={}):
     return False
 
 
+def can_sum_tab(nums, target):
+    table = [False] * (target + 1)
+    table[0] = True
+
+    for t in range(1, target + 1):
+        for n in nums:
+            if n <= t:
+                if table[t - n]:
+                    table[t] = True
+                    break
+
+    return table[target]
+
+
 if __name__ == "__main__":
-    print(can_sum_memo([5, 3, 4, 7], 3500))
+    print(can_sum_tab([2], 8))

@@ -43,5 +43,15 @@ def grid_travel_memo(m, n, memo={}):
     return memo[key]
 
 
+def grid_travel_tab(m, n):
+    table = [[1] * n for _ in range(m)]
+
+    for i in range(1, m):
+        for j in range(1, n):
+            table[i][j] = table[i - 1][j] + table[i][j - 1]
+
+    return table[m - 1][n - 1]
+
+
 if __name__ == "__main__":
-    print(grid_travel_memo(20, 20))
+    print(grid_travel_tab(3, 3))

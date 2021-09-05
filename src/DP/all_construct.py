@@ -4,6 +4,9 @@ the strings.
 
 The function should return a 2D array containing all the ways that the 'target' can be
 constructed by concatenating elements of the 'wordBank' array.
+
+Time Complexity: O(n ^ m)
+There is no way to improve the time complexity more than this
 """
 
 
@@ -15,16 +18,12 @@ def all_construct(target, array):
     for word in array:
         if target.startswith(word):
             suffix_ways = all_construct(target[len(word):], array)
-            target_ways = map(lambda arr: arr.insert(0, word), suffix_ways)
-            map(lambda arr: result.append(arr), target_ways)
+            for way in suffix_ways:
+                way.insert(0, word)
+                result.append(way)
     return result
 
 
 if __name__ == "__main__":
     print(all_construct("purple", ["purp", "p", "ur", "le", "purpl"]))
-
-
-
-
-
-
+    print(all_construct("aaaaaaaaaaz", ["aa", "aaa", "aaaa"]))
