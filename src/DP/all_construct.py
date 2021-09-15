@@ -24,6 +24,21 @@ def all_construct(target, array):
     return result
 
 
+def all_construct_dp(target, wordBank):
+    table = [[] for i in range(len(target) + 1)]
+    table[0] = [[]]
+
+    for i in range(len(target) + 1):
+        for w in wordBank:
+            if target[i: i + len(w)] == w:
+                for arr in table[i]:
+                    new_arr = arr + [w]
+                    table[i + len(w)].append(new_arr)
+
+    return table[len(target)]
+
+
 if __name__ == "__main__":
+    print(all_construct_dp("purple", ["purp", "p", "ur", "le", "purpl"]))
     print(all_construct("purple", ["purp", "p", "ur", "le", "purpl"]))
-    print(all_construct("aaaaaaaaaaz", ["aa", "aaa", "aaaa"]))
+    # print(all_construct("aaaaaaaaaaz", ["aa", "aaa", "aaaa"]))
